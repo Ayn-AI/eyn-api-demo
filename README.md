@@ -278,5 +278,3 @@ print('is_biometric: ' + str(enrolment_info["is_biometric"]))
 ```
 
 (5) Finally, you can use the returned enrolment information in your application. (The demo solely prints all retrieved information.)
-
-
