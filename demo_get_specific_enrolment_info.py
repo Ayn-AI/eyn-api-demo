@@ -8,7 +8,7 @@
 #       * warrant-lite (pip install warrant-lite)
 #
 # Eyn API is available at https://api.eyn.ninja. Documentation of the API is
-# available at xxx.
+# available at https://ayn-ai.github.io/eyn-api-doc/.
 # (c) 2019 eyn ltd
 
 from warrant_lite import WarrantLite
