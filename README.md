@@ -88,7 +88,7 @@ Make sure that you replace <code>username</code>,  <code>password</code>,  <code
 def do_authentication(username, password, cognito_pool_id, cognito_client_id):
     wl = WarrantLite(username=username, password=password,
                      pool_id=cognito_pool_id, client_id=cognito_client_id,
-                     client_secret=None)
+                     client_secret=None, pool_region="eu-west-2")
     tokens = wl.authenticate_user()
     return tokens
 ```
@@ -220,7 +220,7 @@ Make sure that you replace <code>username</code>,  <code>password</code>,  <code
 def do_authentication(username, password, cognito_pool_id, cognito_client_id):
     wl = WarrantLite(username=username, password=password,
                      pool_id=cognito_pool_id, client_id=cognito_client_id,
-                     client_secret=None)
+                     client_secret=None, pool_region="eu-west-2")
     tokens = wl.authenticate_user()
     return tokens
 ```
