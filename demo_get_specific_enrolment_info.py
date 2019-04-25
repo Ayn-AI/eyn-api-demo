@@ -30,7 +30,7 @@ def do_authentication(username, password, cognito_pool_id, cognito_client_id):
     """
     wl = WarrantLite(username=username, password=password,
                      pool_id=cognito_pool_id, client_id=cognito_client_id,
-                     client_secret=None)
+                     client_secret=None, pool_region="eu-west-2")
     tokens = wl.authenticate_user()
     return tokens
 
@@ -48,8 +48,7 @@ def get_specific_enrolment_info(req_auth_headers, enrolment_id):
             (dict): specific enrolment information
     """
     parameters = {'eyn_api_key': '4f37a768-887f-427c-a784-95a818e60319'}
-    # 'https://api.eyn.ninja/api/v1/dev/enrolments',
-    response = requests.get('https://api.eyn-api.com/api/v1/dev/enrolments/' + enrolment_id,
+    response = requests.get('https://api.eyn.ninja/api/v1/dev/enrolments' + enrolment_id,
                             params=parameters, headers=req_auth_headers)
 
     enrolment_info = json.loads(response.content)
