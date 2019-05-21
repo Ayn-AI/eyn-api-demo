@@ -31,7 +31,7 @@ def do_authentication(username, password, cognito_pool_id, cognito_client_id):
     """
     wl = WarrantLite(username=username, password=password,
                      pool_id=cognito_pool_id, client_id=cognito_client_id,
-                     client_secret=None)
+                     client_secret=None, pool_region="eu-west-2")
     tokens = wl.authenticate_user()
     return tokens
 
@@ -50,7 +50,6 @@ def get_enrolments(req_auth_headers):
     parameters = {'start_time': 0,
                   'end_time': str(int(datetime.datetime.now().strftime('%s'))*1000),
                   'eyn_api_key': '4f37a768-887f-427c-a784-95a818e60319'}
-
     response = requests.get('https://api.eyn.ninja/api/v1/dev/enrolments',
                             params=parameters, headers=req_auth_headers)
     body = json.loads(response.content)
@@ -62,10 +61,10 @@ if __name__ == '__main__':
     print('[eyn-api-demo] Demo Get Enrolments')
 
     # TODO: Demo parameters - replace with your eyn credentials
-    username = "demo@eyn-api.com"   # replace with your username
-    password = "Def4ultP4ssw0rd!"   # replace with your password
-    cognito_pool_id = ""            # replace with your cognito pool id
-    cognito_client_id = ""          # replace with your cognito client id
+    username = "robin@eyn.vision"   # replace with your username
+    password = "Thisisjusta#t3st"   # replace with your password
+    cognito_pool_id = "eu-west-2_M1Gw3COHh"            # replace with your cognito pool id
+    cognito_client_id = "60k9j3vd3dvl3dbm0lobmsot63"          # replace with your cognito client id
     
     # First, we have to authenticate to AWS Cognito
     tokens = do_authentication(username, password, cognito_pool_id, cognito_client_id)

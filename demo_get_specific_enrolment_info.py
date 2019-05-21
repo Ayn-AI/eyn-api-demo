@@ -30,7 +30,7 @@ def do_authentication(username, password, cognito_pool_id, cognito_client_id):
     """
     wl = WarrantLite(username=username, password=password,
                      pool_id=cognito_pool_id, client_id=cognito_client_id,
-                     client_secret=None)
+                     client_secret=None, pool_region="eu-west-2")
     tokens = wl.authenticate_user()
     return tokens
 
@@ -48,8 +48,7 @@ def get_specific_enrolment_info(req_auth_headers, enrolment_id):
             (dict): specific enrolment information
     """
     parameters = {'eyn_api_key': '4f37a768-887f-427c-a784-95a818e60319'}
-    # 'https://api.eyn.ninja/api/v1/dev/enrolments',
-    response = requests.get('https://api.eyn-api.com/api/v1/dev/enrolments/' + enrolment_id,
+    response = requests.get('https://api.eyn.ninja/api/v1/dev/enrolments/' + enrolment_id,
                             params=parameters, headers=req_auth_headers)
 
     enrolment_info = json.loads(response.content)
@@ -59,10 +58,10 @@ if __name__ == '__main__':
     print('[eyn-api-demo] Demo Get Specific Enrolment Info.')
 
     # TODO: Demo parameters - replace with your eyn credentials
-    username = "demo@eyn-api.com"   # replace with your username
-    password = "Def4ultP4ssw0rd!"   # replace with your password
-    cognito_pool_id = ""            # replace with your cognito pool id
-    cognito_client_id = ""          # replace with your cognito client id
+    username = "robin@eyn.vision"   # replace with your username
+    password = "Thisisjusta#t3st"   # replace with your password
+    cognito_pool_id = "eu-west-2_M1Gw3COHh"            # replace with your cognito pool id
+    cognito_client_id = "60k9j3vd3dvl3dbm0lobmsot63"          # replace with your cognito client id
     
     # First, we have to authenticate to AWS Cognito
     tokens = do_authentication(username, password, cognito_pool_id, cognito_client_id)
@@ -72,10 +71,10 @@ if __name__ == '__main__':
                         'Authorization': tokens['AuthenticationResult']['IdToken']}
 
     # Now, we can query EYN API to get specific information about an enrolment
-    enrolment_info = get_specific_enrolment_info(req_auth_headers, 'd7bd8751-ea88-4e82-94d8-4940cc07eea8')
+    enrolment_info = get_specific_enrolment_info(req_auth_headers, 'a987259c-bbbb-4b26-926e-b3e6ab64620d')
 
     # Let's print the information that we retrieved
-    print('[eyn-api-demo] Results of querying /enrolments/d7bd8751-ea88-4e82-94d8-4940cc07eea8:')
+    print('[eyn-api-demo] Results of querying /enrolments/a987259c-bbbb-4b26-926e-b3e6ab64620d:')
     print('other_names: ' + enrolment_info["other_names"])
     print('family_name: ' + enrolment_info["family_name"])
     print('date_of_birth: ' + enrolment_info["date_of_birth"])
@@ -88,5 +87,5 @@ if __name__ == '__main__':
     if "link_user_selfie" in enrolment_info["images"]:
         print('link_user_selfie: ' + enrolment_info["images"]["link_user_selfie"])
     print('right_to_work_status: ' + enrolment_info["right_to_work_status"])
-    print('mrz_verified: ' + str(enrolment_info["mrz_verified"]))
-    print('is_biometric: ' + str(enrolment_info["is_biometric"]))
+    print('mrz_check: ' + str(enrolment_info["document_checks"]["mrz_check"]))
+    print('chip_check: ' + str(enrolment_info["document_checks"]["chip_check"]))
