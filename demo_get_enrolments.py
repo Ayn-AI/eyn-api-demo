@@ -36,7 +36,7 @@ def do_authentication(username, password, cognito_pool_id, cognito_client_id):
     return tokens
 
 
-def get_enrolments(req_auth_headers):
+def get_enrolments(req_auth_headers, eyn_api_key):
     """ queries the EYN API's /enrolments endpoint to retrieve a list of
         enrolment ids
 
@@ -49,9 +49,8 @@ def get_enrolments(req_auth_headers):
     """
     parameters = {'start_time': 0,
                   'end_time': str(int(datetime.datetime.now().strftime('%s'))*1000),
-                  'eyn_api_key': '4f37a768-887f-427c-a784-95a818e60319'}
-
-    response = requests.get('https://api.eyn.ninja/api/v1/dev/enrolments',
+                  'eyn_api_key': eyn_api_key}
+    response = requests.get('https://api.eyn.ninja/api/v1/prod/enrolments',
                             params=parameters, headers=req_auth_headers)
     body = json.loads(response.content)
     enrolment_ids = body["enrolment_ids"]
@@ -66,6 +65,7 @@ if __name__ == '__main__':
     password = "Def4ultP4ssw0rd!"   # replace with your password
     cognito_pool_id = ""            # replace with your cognito pool id
     cognito_client_id = ""          # replace with your cognito client id
+    eyn_api_key = ""                # replace with your eyn api key
     
     # First, we have to authenticate to AWS Cognito
     tokens = do_authentication(username, password, cognito_pool_id, cognito_client_id)
@@ -75,7 +75,7 @@ if __name__ == '__main__':
                         'Authorization': tokens['AuthenticationResult']['IdToken']}
 
     # Now, we can query EYN API to get a list of enrolments
-    enrolment_ids = get_enrolments(req_auth_headers)
+    enrolment_ids = get_enrolments(req_auth_headers, eyn_api_key)
 
     # Let's print the list of enrolments that we retrieved
     print('[eyn-api-demo] Results of querying /enrolments')
