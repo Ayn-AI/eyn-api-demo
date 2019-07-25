@@ -43,6 +43,7 @@ def get_specific_enrolment_info(req_auth_headers, enrolment_id, eyn_api_key):
                                      autorisation token
             enrolment_id (str): id of the specific enrolment we want to extract
                                 information from
+            eyn_api_key (str): the api key from eyn
 
         returns:
             (dict): specific enrolment information
@@ -79,14 +80,18 @@ if __name__ == '__main__':
     print('other_names: ' + enrolment_info["other_names"])
     print('family_name: ' + enrolment_info["family_name"])
     print('date_of_birth: ' + enrolment_info["date_of_birth"])
-    if "link_identity_document_chip_face" in enrolment_info["images"]:
-        print('link_identity_document_chip_face: ' + str(enrolment_info["images"]["link_identity_document_chip_face"]))
-    if "link_identity_document_image_front" in enrolment_info["images"]:
-        print('link_identity_document_image_front: ' + str(enrolment_info["images"]["link_identity_document_image_front"]))
-    if "link_identity_document_image_mrz" in enrolment_info["images"]:
-        print('link_identity_document_image_mrz: ' + str(enrolment_info["images"]["link_identity_document_image_mrz"]))
-    if "link_user_selfie" in enrolment_info["images"]:
-        print('link_user_selfie: ' + str(enrolment_info["images"]["link_user_selfie"]))
+    if "images" in enrolment_info:
+        if "link_identity_document_chip_face" in enrolment_info["images"]:
+            print('link_identity_document_chip_face: ' + str(enrolment_info["images"]["link_identity_document_chip_face"]))
+        if "link_identity_document_image_front" in enrolment_info["images"]:
+            print('link_identity_document_image_front: ' + str(enrolment_info["images"]["link_identity_document_image_front"]))
+        if "link_identity_document_image_mrz" in enrolment_info["images"]:
+            print('link_identity_document_image_mrz: ' + str(enrolment_info["images"]["link_identity_document_image_mrz"]))
+        if "link_user_selfie" in enrolment_info["images"]:
+            print('link_user_selfie: ' + str(enrolment_info["images"]["link_user_selfie"]))
     print('right_to_work_status: ' + str(enrolment_info["right_to_work_status"]))
-    print('mrz_check: ' + str(enrolment_info["document_checks"]["mrz_check"]))
-    print('chip_check: ' + str(enrolment_info["document_checks"]["chip_check"]))
+    if "document_checks" in enrolment_info:
+        if "mrz_check" in enrolment_info["document_checks"]:
+            print('mrz_check: ' + str(enrolment_info["document_checks"]["mrz_check"]))
+        if "chip_check" in enrolment_info["document_checks"]:
+            print('chip_check: ' + str(enrolment_info["document_checks"]["chip_check"]))

@@ -42,7 +42,8 @@ def get_enrolments(req_auth_headers, eyn_api_key):
 
         params:
             req_auth_headers (dict): authentication headers containing
-                                     autorisation token
+                                     authorisation token
+            eyn_api_key (str): the api key from eyn
 
         returns:
             (dict): a list of enrolment ids
