@@ -57,6 +57,7 @@ the following lines in <a href="https://github.com/Ayn-AI/eyn-api-demo/blob/mast
 66:    password = "Def4ultP4ssw0rd!"     # replace with your password
 67:    cognito_pool_id = ""              # replace with your cognito pool id
 68:    cognito_client_id = ""            # replace with your cognito client id
+69:    eyn_api_key = ""                  # replace with your eyn api key
 ```
 This will give you access to your production data. Want to know more? The following demo guide will explain the demo step-by-step.
 
@@ -72,6 +73,7 @@ if __name__ == '__main__':
     password = "Def4ultP4ssw0rd!"     # replace with your password
     cognito_pool_id = ""              # replace with your cognito pool id
     cognito_client_id = ""            # replace with your cognito client id
+    eyn_api_key = ""                  # replace with your eyn api key
     
     # First, we have to authenticate to AWS Cognito
     tokens = do_authentication(username, password, cognito_pool_id, cognito_client_id)
@@ -80,7 +82,7 @@ if __name__ == '__main__':
 The entry point of the demo is `if __name__ == '__main__':` 
 
 <aside class="notice">
-Make sure that you replace <code>username</code>,  <code>password</code>,  <code>cognito_pool_id</code> and  <code>cognito_client_id</code> with the credentials supplied by EYN.
+Make sure that you replace <code>username</code>,  <code>password</code>,  <code>cognito_pool_id</code>, <code>cognito_client_id</code> and <code>eyn_api_key</code> with the credentials supplied by EYN.
 </aside>
 
 ```python
@@ -109,15 +111,15 @@ enrolment_ids = get_enrolments(req_auth_headers)
 ```
 
 (3)
-You can create the autorisation headers using the authentication tokens. Then, we can query EYN's API endpoint <a href="#get-enrolments" style="text-decoration: none">/enrolments</a> via `get_enrolments(req_auth_headers)`.
+You can create the autorisation headers using the authentication tokens. Then, we can query EYN's API endpoint <a href="#get-enrolments" style="text-decoration: none">/enrolments</a> via `get_enrolments(req_auth_headers, eyn_api_key)`.
 
 ```python
 (4)
-def get_enrolments(req_auth_headers):
+def get_enrolments(req_auth_headers, eyn_api_key):
     parameters = {'start_time': 0,
                   'end_time': str(int(datetime.datetime.now().strftime('%s'))*1000),
-                  'eyn_api_key': '4f37a768-887f-427c-a784-95a818e60319'}
-    response = requests.get('https://api.eyn.ninja/api/v1/dev/enrolments',
+                  'eyn_api_key': eyn_api_key}
+    response = requests.get('https://api.eyn.ninja/api/v1/prod/enrolments',
                             params=parameters, headers=req_auth_headers)
     body = json.loads(response.content)
     enrolment_ids = body["enrolment_ids"]
@@ -175,8 +177,9 @@ python demo_get_specific_enrolment_info.py
     "link_identity_document_image_mrz": <link>,
     "link_user_selfie": <link>},
   "right_to_work_status": "warn",
-  "mrz_verified": true, 
-  "is_biometric": true}
+  "document_checks" : {
+  "mrz_check": true, 
+  "chip_check": true}}
 ```
 
 (4) Ask <a href="mailto:sales@eyn.vision">EYN</a> for your production <a href="#authentication">credentials</a> and change 
@@ -189,6 +192,7 @@ the following lines in <a href="https://github.com/Ayn-AI/eyn-api-demo/blob/mast
 66:    password = "Def4ultP4ssw0rd!"     # replace with your password
 67:    cognito_pool_id = ""              # replace with your cognito pool id
 68:    cognito_client_id = ""            # replace with your cognito client id
+69:    eyn_api_key = ""                  # replace with your eyn api key
 ```
 This will give you access to your production data. Want to know more? The following demo guide will explain the demo step-by-step.
 
@@ -204,6 +208,7 @@ if __name__ == '__main__':
     password = "Def4ultP4ssw0rd!"     # replace with your password
     cognito_pool_id = ""              # replace with your cognito pool id
     cognito_client_id = ""            # replace with your cognito client id
+    eyn_api_key = ""                  # replace with your eyn api key
     
     # First, we have to authenticate to AWS Cognito
     tokens = do_authentication(username, password, cognito_pool_id, cognito_client_id)
@@ -212,7 +217,7 @@ if __name__ == '__main__':
 (1) The entry point of the demo is `if __name__ == '__main__':`
 
 <aside class="notice">
-Make sure that you replace <code>username</code>,  <code>password</code>,  <code>cognito_pool_id</code> and  <code>cognito_client_id</code> with the credentials supplied by EYN.
+Make sure that you replace <code>username</code>,  <code>password</code>,  <code>cognito_pool_id</code> , <code>cognito_client_id</code> and <code>eyn_api_key</code> with the credentials supplied by EYN.
 </aside>
 
 ```python
@@ -236,10 +241,10 @@ req_auth_headers = {'Accept': '*/*',
                     'Content-Type': 'application/json; charset=UTF-8',
                     'Authorization': tokens['AuthenticationResult']['IdToken']}
 # Now, we can query EYN API to get specific information about an enrolment
-enrolment_info = get_specific_enrolment_info(req_auth_headers, 'd7bd8751-ea88-4e82-94d8-4940cc07eea8')
+enrolment_info = get_specific_enrolment_info(req_auth_headers, 'd7bd8751-ea88-4e82-94d8-4940cc07eea8', eyn_api_key)
 ```
 
-(3) You can create the autorisation headers using the authentication tokens. Then, we can query EYN's API endpoint <a href="#get-information-about-a-specific-enrolment" style="text-decoration: none">/enrolments/{id}</a> via `get_specific_enrolment_info(req_auth_headers, 'd7bd8751-ea88-4e82-94d8-4940cc07eea8')`.
+(3) You can create the autorisation headers using the authentication tokens. Then, we can query EYN's API endpoint <a href="#get-information-about-a-specific-enrolment" style="text-decoration: none">/enrolments/{id}</a> via `get_specific_enrolment_info(req_auth_headers, 'd7bd8751-ea88-4e82-94d8-4940cc07eea8', eyn_api_key)`.
 
 <aside class="notice">
 Replace <code>enrolment_id</code> with a valid enrolment id (for example, retrieved via <a href="#get-enrolments" style="text-decoration: none">/enrolments</a>).
@@ -249,7 +254,7 @@ Replace <code>enrolment_id</code> with a valid enrolment id (for example, retrie
 (4)
 def get_specific_enrolment_info(req_auth_headers, enrolment_id):
     parameters = {'eyn_api_key': '4f37a768-887f-427c-a784-95a818e60319'}
-    response = requests.get('https://api.eyn.ninja/api/v1/dev/enrolments' + enrolment_id,
+    response = requests.get('https://api.eyn.ninja/api/v1/prod/enrolments' + enrolment_id,
                             params=parameters, headers=req_auth_headers)
     enrolment_info = json.loads(response.content)
     return enrolment_info
@@ -264,17 +269,21 @@ print('[eyn-api-demo] Results of querying /enrolments/d7bd8751-ea88-4e82-94d8-49
 print('other_names: ' + enrolment_info["other_names"])
 print('family_name: ' + enrolment_info["family_name"])
 print('date_of_birth: ' + enrolment_info["date_of_birth"])
-if "link_identity_document_chip_face" in enrolment_info["images"]:
-    print('link_identity_document_chip_face: ' + enrolment_info["images"]["link_identity_document_chip_face"])
-if "link_identity_document_image_front" in enrolment_info["images"]:
-    print('link_identity_document_image_front: ' + enrolment_info["images"]["link_identity_document_image_front"])
-if "link_identity_document_image_mrz" in enrolment_info["images"]:
-    print('link_identity_document_image_mrz: ' + enrolment_info["images"]["link_identity_document_image_mrz"])
-if "link_user_selfie" in enrolment_info["images"]:
-    print('link_user_selfie: ' + enrolment_info["images"]["link_user_selfie"])
-print('right_to_work_status: ' + enrolment_info["right_to_work_status"])
-print('mrz_verified: ' + str(enrolment_info["mrz_verified"]))
-print('is_biometric: ' + str(enrolment_info["is_biometric"]))
+if "images" in enrolment_info:
+    if "link_identity_document_chip_face" in enrolment_info["images"]:
+        print('link_identity_document_chip_face: ' + str(enrolment_info["images"]["link_identity_document_chip_face"]))
+    if "link_identity_document_image_front" in enrolment_info["images"]:
+        print('link_identity_document_image_front: ' + str(enrolment_info["images"]["link_identity_document_image_front"]))
+    if "link_identity_document_image_mrz" in enrolment_info["images"]:
+        print('link_identity_document_image_mrz: ' + str(enrolment_info["images"]["link_identity_document_image_mrz"]))
+    if "link_user_selfie" in enrolment_info["images"]:
+        print('link_user_selfie: ' + str(enrolment_info["images"]["link_user_selfie"]))
+print('right_to_work_status: ' + str(enrolment_info["right_to_work_status"]))
+if "document_checks" in enrolment_info:
+    if "mrz_check" in enrolment_info["document_checks"]:
+        print('mrz_check: ' + str(enrolment_info["document_checks"]["mrz_check"]))
+    if "chip_check" in enrolment_info["document_checks"]:
+        print('chip_check: ' + str(enrolment_info["document_checks"]["chip_check"]))
 ```
 
 (5) Finally, you can use the returned enrolment information in your application. (The demo solely prints all retrieved information.)
