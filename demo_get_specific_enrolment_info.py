@@ -48,7 +48,7 @@ def get_specific_enrolment_info(req_auth_headers, enrolment_id, eyn_api_key):
             (dict): specific enrolment information
     """
     parameters = {'eyn_api_key': eyn_api_key}
-    response = requests.get('https://api.eyn.ninja/api/v1/dev/enrolments/' + enrolment_id,
+    response = requests.get('https://api.eyn.ninja/api/v1/prod/enrolments/' + enrolment_id,
                             params=parameters, headers=req_auth_headers)
 
     enrolment_info = json.loads(response.content)

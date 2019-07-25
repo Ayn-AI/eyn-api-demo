@@ -50,7 +50,7 @@ def get_enrolments(req_auth_headers, eyn_api_key):
     parameters = {'start_time': 0,
                   'end_time': str(int(datetime.datetime.now().strftime('%s'))*1000),
                   'eyn_api_key': eyn_api_key}
-    response = requests.get('https://api.eyn.ninja/api/v1/dev/enrolments',
+    response = requests.get('https://api.eyn.ninja/api/v1/prod/enrolments',
                             params=parameters, headers=req_auth_headers)
     body = json.loads(response.content)
     enrolment_ids = body["enrolment_ids"]
