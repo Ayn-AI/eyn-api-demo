@@ -34,7 +34,7 @@ def do_authentication(username, password, cognito_pool_id, cognito_client_id):
     tokens = wl.authenticate_user()
     return tokens
 
-def get_specific_enrolment_info(req_auth_headers, enrolment_id):
+def get_specific_enrolment_info(req_auth_headers, enrolment_id, eyn_api_key):
     """ queries the EYN API's /enrolments/{id} endpoint to retrieve specific
         information about an enrolment with id = {id}
 
@@ -47,7 +47,7 @@ def get_specific_enrolment_info(req_auth_headers, enrolment_id):
         returns:
             (dict): specific enrolment information
     """
-    parameters = {'eyn_api_key': '4f37a768-887f-427c-a784-95a818e60319'}
+    parameters = {'eyn_api_key': eyn_api_key}
     response = requests.get('https://api.eyn.ninja/api/v1/dev/enrolments/' + enrolment_id,
                             params=parameters, headers=req_auth_headers)
 
@@ -58,10 +58,11 @@ if __name__ == '__main__':
     print('[eyn-api-demo] Demo Get Specific Enrolment Info.')
 
     # TODO: Demo parameters - replace with your eyn credentials
-    username = "robin@eyn.vision"   # replace with your username
-    password = "Thisisjusta#t3st"   # replace with your password
-    cognito_pool_id = "eu-west-2_M1Gw3COHh"            # replace with your cognito pool id
-    cognito_client_id = "60k9j3vd3dvl3dbm0lobmsot63"          # replace with your cognito client id
+    username = "demo@eyn-api.com"   # replace with your username
+    password = "Def4ultP4ssw0rd!"   # replace with your password
+    cognito_pool_id = ""            # replace with your cognito pool id
+    cognito_client_id = ""          # replace with your cognito client id
+    eyn_api_key = ""                # replace with your eyn api key
     
     # First, we have to authenticate to AWS Cognito
     tokens = do_authentication(username, password, cognito_pool_id, cognito_client_id)
@@ -71,7 +72,7 @@ if __name__ == '__main__':
                         'Authorization': tokens['AuthenticationResult']['IdToken']}
 
     # Now, we can query EYN API to get specific information about an enrolment
-    enrolment_info = get_specific_enrolment_info(req_auth_headers, 'a987259c-bbbb-4b26-926e-b3e6ab64620d')
+    enrolment_info = get_specific_enrolment_info(req_auth_headers, 'a987259c-bbbb-4b26-926e-b3e6ab64620d', eyn_api_key)
 
     # Let's print the information that we retrieved
     print('[eyn-api-demo] Results of querying /enrolments/a987259c-bbbb-4b26-926e-b3e6ab64620d:')
@@ -79,13 +80,13 @@ if __name__ == '__main__':
     print('family_name: ' + enrolment_info["family_name"])
     print('date_of_birth: ' + enrolment_info["date_of_birth"])
     if "link_identity_document_chip_face" in enrolment_info["images"]:
-        print('link_identity_document_chip_face: ' + enrolment_info["images"]["link_identity_document_chip_face"])
+        print('link_identity_document_chip_face: ' + str(enrolment_info["images"]["link_identity_document_chip_face"]))
     if "link_identity_document_image_front" in enrolment_info["images"]:
-        print('link_identity_document_image_front: ' + enrolment_info["images"]["link_identity_document_image_front"])
+        print('link_identity_document_image_front: ' + str(enrolment_info["images"]["link_identity_document_image_front"]))
     if "link_identity_document_image_mrz" in enrolment_info["images"]:
-        print('link_identity_document_image_mrz: ' + enrolment_info["images"]["link_identity_document_image_mrz"])
+        print('link_identity_document_image_mrz: ' + str(enrolment_info["images"]["link_identity_document_image_mrz"]))
     if "link_user_selfie" in enrolment_info["images"]:
-        print('link_user_selfie: ' + enrolment_info["images"]["link_user_selfie"])
-    print('right_to_work_status: ' + enrolment_info["right_to_work_status"])
+        print('link_user_selfie: ' + str(enrolment_info["images"]["link_user_selfie"]))
+    print('right_to_work_status: ' + str(enrolment_info["right_to_work_status"]))
     print('mrz_check: ' + str(enrolment_info["document_checks"]["mrz_check"]))
     print('chip_check: ' + str(enrolment_info["document_checks"]["chip_check"]))
