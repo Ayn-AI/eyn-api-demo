@@ -80,6 +80,8 @@ if __name__ == '__main__':
     print('other_names: ' + enrolment_info["other_names"])
     print('family_name: ' + enrolment_info["family_name"])
     print('date_of_birth: ' + enrolment_info["date_of_birth"])
+    print('nationality: ' + enrolment_info["nationality"])
+    print('document_expiry_date: ' + enrolment_info["document_expiry_date"])
     if "images" in enrolment_info:
         if "link_identity_document_chip_face" in enrolment_info["images"]:
             print('link_identity_document_chip_face: ' + str(enrolment_info["images"]["link_identity_document_chip_face"]))

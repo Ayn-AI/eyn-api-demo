@@ -171,6 +171,8 @@ python demo_get_specific_enrolment_info.py
 {"other_names" : "John",
  "family_name" : "Doe",
  "date_of_birth": "19700101",
+ "nationality": "AUT",
+ "document_expiry_date": "20410101",
  "images" : {
     "link_identity_document_chip_face": <link>, 
     "link_identity_document_image_front": <link>,
@@ -269,6 +271,8 @@ print('[eyn-api-demo] Results of querying /enrolments/d7bd8751-ea88-4e82-94d8-49
 print('other_names: ' + enrolment_info["other_names"])
 print('family_name: ' + enrolment_info["family_name"])
 print('date_of_birth: ' + enrolment_info["date_of_birth"])
+print('nationality: ' + enrolment_info["nationality"])
+print('document_expiry_date: ' + enrolment_info["document_expiry_date"])
 if "images" in enrolment_info:
     if "link_identity_document_chip_face" in enrolment_info["images"]:
         print('link_identity_document_chip_face: ' + str(enrolment_info["images"]["link_identity_document_chip_face"]))
