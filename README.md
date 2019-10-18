@@ -171,15 +171,26 @@ python demo_get_specific_enrolment_info.py
 {"other_names" : "John",
  "family_name" : "Doe",
  "date_of_birth": "19700101",
+ "nationality": "AUT",
+ "document_type": "P",
+ "document_expiry_date": "20420101",
  "images" : {
     "link_identity_document_chip_face": <link>, 
     "link_identity_document_image_front": <link>,
     "link_identity_document_image_mrz": <link>,
     "link_user_selfie": <link>},
   "right_to_work_status": "warn",
-  "document_checks" : {
-  "mrz_check": true, 
-  "chip_check": true}}
+  "biometric_checks": {
+    "face_matching_score": 92.33,
+    "face_matching_status": "passed",
+    "model_used": "torch"},
+  "document_checks": {
+    "mrz_check": true, 
+    "chip_check": true},
+  "checked_by": "user1@companydomain.com"
+  "checked_at: {
+    "site_id": "site_id_<number>"
+    "site_name":"site_name" }}
 ```
 
 (4) Ask <a href="mailto:sales@eyn.vision">EYN</a> for your production <a href="#authentication">credentials</a> and change 
@@ -265,10 +276,13 @@ def get_specific_enrolment_info(req_auth_headers, enrolment_id):
 ```python
 (5)
 # Let's print the information that we retrieved
-print('[eyn-api-demo] Results of querying /enrolments/d7bd8751-ea88-4e82-94d8-4940cc07eea8:')
+print('[eyn-api-demo] Results of querying /enrolments/a987259c-bbbb-4b26-926e-b3e6ab64620d:')
 print('other_names: ' + enrolment_info["other_names"])
 print('family_name: ' + enrolment_info["family_name"])
 print('date_of_birth: ' + enrolment_info["date_of_birth"])
+print('nationality: ' + enrolment_info["nationality"])
+print('document_type: ' + enrolment_info["document_type"])
+print('document_expiry_date: ' + enrolment_info["document_expiry_date"])
 if "images" in enrolment_info:
     if "link_identity_document_chip_face" in enrolment_info["images"]:
         print('link_identity_document_chip_face: ' + str(enrolment_info["images"]["link_identity_document_chip_face"]))
@@ -279,11 +293,24 @@ if "images" in enrolment_info:
     if "link_user_selfie" in enrolment_info["images"]:
         print('link_user_selfie: ' + str(enrolment_info["images"]["link_user_selfie"]))
 print('right_to_work_status: ' + str(enrolment_info["right_to_work_status"]))
+if "biometric_checks" in enrolment_info:
+    if "face_matching_score" in enrolment_info["biometric_checks"]:
+        print('face_matching_score: ' + str(enrolment_info["biometric_checks"]["face_matching_score"]))
+    if "face_matching_status" in enrolment_info["biometric_checks"]:
+        print('face_matching_status: ' + str(enrolment_info["biometric_checks"]["face_matching_status"]))
+    if "model_used" in enrolment_info["biometric_checks"]:
+        print('model_used: ' + str(enrolment_info["biometric_checks"]["model_used"]))
 if "document_checks" in enrolment_info:
     if "mrz_check" in enrolment_info["document_checks"]:
         print('mrz_check: ' + str(enrolment_info["document_checks"]["mrz_check"]))
     if "chip_check" in enrolment_info["document_checks"]:
         print('chip_check: ' + str(enrolment_info["document_checks"]["chip_check"]))
+print('checked_by: ' + enrolment_info["checked_by"])
+if "checked_at" in enrolment_info:
+    if "site_id" in enrolment_info["checked_at"]:
+        print('site_id: ' + str(enrolment_info["checked_at"]["site_id"]))
+    if "site_name" in enrolment_info["checked_at"]:
+        print('site_name: ' + str(enrolment_info["checked_at"]["site_name"]))
 ```
 
 (5) Finally, you can use the returned enrolment information in your application. (The demo solely prints all retrieved information.)
