@@ -81,6 +81,7 @@ if __name__ == '__main__':
     print('family_name: ' + enrolment_info["family_name"])
     print('date_of_birth: ' + enrolment_info["date_of_birth"])
     print('nationality: ' + enrolment_info["nationality"])
+    print('document_type: ' + enrolment_info["document_type"])
     print('document_expiry_date: ' + enrolment_info["document_expiry_date"])
     if "images" in enrolment_info:
         if "link_identity_document_chip_face" in enrolment_info["images"]:
@@ -92,8 +93,21 @@ if __name__ == '__main__':
         if "link_user_selfie" in enrolment_info["images"]:
             print('link_user_selfie: ' + str(enrolment_info["images"]["link_user_selfie"]))
     print('right_to_work_status: ' + str(enrolment_info["right_to_work_status"]))
+    if "biometric_checks" in enrolment_info:
+        if "face_matching_score" in enrolment_info["biometric_checks"]:
+            print('face_matching_score: ' + str(enrolment_info["biometric_checks"]["face_matching_score"]))
+        if "face_matching_status" in enrolment_info["biometric_checks"]:
+            print('face_matching_status: ' + str(enrolment_info["biometric_checks"]["face_matching_status"]))
+        if "model_used" in enrolment_info["biometric_checks"]:
+            print('model_used: ' + str(enrolment_info["biometric_checks"]["model_used"]))
     if "document_checks" in enrolment_info:
         if "mrz_check" in enrolment_info["document_checks"]:
             print('mrz_check: ' + str(enrolment_info["document_checks"]["mrz_check"]))
         if "chip_check" in enrolment_info["document_checks"]:
             print('chip_check: ' + str(enrolment_info["document_checks"]["chip_check"]))
+    print('checked_by: ' + enrolment_info["checked_by"])
+    if "checked_at" in enrolment_info:
+        if "site_id" in enrolment_info["checked_at"]:
+            print('site_id: ' + str(enrolment_info["checked_at"]["site_id"]))
+        if "site_name" in enrolment_info["checked_at"]:
+            print('site_name: ' + str(enrolment_info["checked_at"]["site_name"]))
