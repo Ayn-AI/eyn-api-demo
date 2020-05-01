@@ -51,7 +51,6 @@ def get_specific_check_info(req_auth_headers, check_id, api_key):
     parameters = {'api_key': api_key}
     response = requests.get('https://api.eyn.ninja/api/v1/prod/checks/' + check_id,
                             params=parameters, headers=req_auth_headers)
-
     check_info = json.loads(response.content)
     return check_info
 
@@ -59,7 +58,7 @@ if __name__ == '__main__':
     print('[eyn-api-demo] Demo Get Specific Check Info.')
 
     # TODO: Demo parameters - replace with your eyn credentials
-    username = "demo@eyn-api.com"   # replace with your username
+    username = "demo@api.eyn.ninja" # replace with your username
     password = "Def4ultP4ssw0rd!"   # replace with your password
     cognito_pool_id = ""            # replace with your cognito pool id
     cognito_client_id = ""          # replace with your cognito client id
@@ -73,7 +72,7 @@ if __name__ == '__main__':
                         'Authorization': tokens['AuthenticationResult']['IdToken']}
 
     # Now, we can query EYN API to get specific information about a check
-    check_info = get_specific_check_info(req_auth_headers, '<REPLACE WITH YOUR ID>', api_key)
+    check_info = get_specific_check_info(req_auth_headers, '<REPLACE ME WITH ID>', api_key)
 
     # Let's print the information that we retrieved
     print('[eyn-api-demo] Results of querying /checks/{id}:')
@@ -81,8 +80,8 @@ if __name__ == '__main__':
     print('family_name: ' + check_info["family_name"])
     print('date_of_birth: ' + check_info["date_of_birth"])
     print('check_state: ' + check_info["check_state"])
-    print('time_stamp: ' + check_info["time_stamp"])
+    print('time_stamp: ' + str(check_info["time_stamp"]))
     print('duration: ' + check_info["duration"])
-    print('user_confirmed: ' + check_info["user_confirmed"])
+    print('user_confirmed: ' + str(check_info["user_confirmed"]))
     print('site_id: ' + check_info["site_id"])
     print('enrolment_id: ' + check_info["enrolment_id"])

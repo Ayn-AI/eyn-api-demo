@@ -62,7 +62,7 @@ if __name__ == '__main__':
     print('[eyn-api-demo] Demo Get Checks')
 
     # TODO: Demo parameters - replace with your eyn credentials
-    username = "demo@eyn-api.com"   # replace with your username
+    username = "demo@api.eyn.ninja" # replace with your username
     password = "Def4ultP4ssw0rd!"   # replace with your password
     cognito_pool_id = ""            # replace with your cognito pool id
     cognito_client_id = ""          # replace with your cognito client id
