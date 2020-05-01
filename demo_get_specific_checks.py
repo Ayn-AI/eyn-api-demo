@@ -63,6 +63,7 @@ if __name__ == '__main__':
     cognito_pool_id = ""            # replace with your cognito pool id
     cognito_client_id = ""          # replace with your cognito client id
     api_key = ""                    # replace with your api key
+    check_id = ""                   # replace with a valid check_id (eg. retrieved via /checks)
     
     # First, we have to authenticate to AWS Cognito
     tokens = do_authentication(username, password, cognito_pool_id, cognito_client_id)
@@ -72,7 +73,7 @@ if __name__ == '__main__':
                         'Authorization': tokens['AuthenticationResult']['IdToken']}
 
     # Now, we can query EYN API to get specific information about a check
-    check_info = get_specific_check_info(req_auth_headers, '<REPLACE ME WITH ID>', api_key)
+    check_info = get_specific_check_info(req_auth_headers, check_id, api_key)
 
     # Let's print the information that we retrieved
     print('[eyn-api-demo] Results of querying /checks/{id}:')
