@@ -48,12 +48,14 @@ def get_enrolments(req_auth_headers, eyn_api_key):
         returns:
             (dict): a list of enrolment ids
     """
-    parameters = {'start_time': 0,
+    parameters = {'start_time': str((int(datetime.datetime.now().strftime('%s'))- 10000)*1000),
                   'end_time': str(int(datetime.datetime.now().strftime('%s'))*1000),
                   'eyn_api_key': eyn_api_key}
     response = requests.get('https://api.eyn.ninja/api/v1/prod/enrolments',
                             params=parameters, headers=req_auth_headers)
     body = json.loads(response.content)
+    print(response.content)
+    print(response.status_code)
     enrolment_ids = body["enrolment_ids"]
     return enrolment_ids
 
@@ -62,11 +64,11 @@ if __name__ == '__main__':
     print('[eyn-api-demo] Demo Get Enrolments')
 
     # TODO: Demo parameters - replace with your eyn credentials
-    username = "demo@eyn-api.com"   # replace with your username
+    username = "demo@api.eyn.ninja"   # replace with your username
     password = "Def4ultP4ssw0rd!"   # replace with your password
-    cognito_pool_id = ""            # replace with your cognito pool id
-    cognito_client_id = ""          # replace with your cognito client id
-    eyn_api_key = ""                # replace with your eyn api key
+    cognito_pool_id = "eu-west-2_ENTzGy2No"            # replace with your cognito pool id
+    cognito_client_id = "3ogsvfd39d6r5jg9rcf7nv9lt6"          # replace with your cognito client id
+    eyn_api_key = "api_key_dc0dce7e-52c8-4072-bc4a-743a335970c7"                # replace with your eyn api key
     
     # First, we have to authenticate to AWS Cognito
     tokens = do_authentication(username, password, cognito_pool_id, cognito_client_id)
