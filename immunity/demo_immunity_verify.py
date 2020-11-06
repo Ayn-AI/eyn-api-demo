@@ -13,5 +13,5 @@ data = {
     'api_secret': '676bc3ca-e2b9-4161-85a4-1dc8592916a5',
     'certificate': certificate_base64_encoded,
 }
-response = requests.post('https://api.eyn.ninja/api/v1/prod/immunity_verify', json=data)
+response = requests.post('https://immunity.eyn.ninja/immunity_verify', json=data)
 print(response.text)
